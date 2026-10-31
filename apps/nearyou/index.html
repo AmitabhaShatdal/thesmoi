@@ -1,86 +1,975 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Near You: know when your contacts are in the same area</title>
-<meta name="description" content="Near You is an iPhone app that tells you when friends, family and contacts are in the same area.">
-<link rel="canonical" href="https://thesmoi.com/apps/nearyou/">
-<link rel="icon" href="/apps/nearyou/logo.svg" type="image/svg+xml">
-<style>
-:root{--navy:#172554;--blue:#99DDF9;--gold:#B8862B;--bg:#F6FBFE;--card:#FFFFFF;--text:#1B2433;--muted:#51607A;--line:#D8E6EF}
-@media (prefers-color-scheme:dark){:root{--navy:#E8EEF9;--blue:#14304A;--gold:#E6B56D;--bg:#0C1420;--card:#131E2E;--text:#E6ECF5;--muted:#A5B2C6;--line:#25344A}}
-*{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--bg);color:var(--text);font:17px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
-header{background:var(--blue);padding:28px 20px}
-.wrap{max-width:760px;margin:0 auto;padding:0 20px}
-header .wrap{display:flex;align-items:center;gap:16px;padding:0}
-header img{width:64px;height:64px;flex:none}
-header a{color:var(--navy);text-decoration:none}
-header .name{font-size:22px;font-weight:700;letter-spacing:.02em}
-header .tag{font-size:14px;color:var(--navy);opacity:.85}
-nav{border-bottom:1px solid var(--line);background:var(--card)}
-nav .wrap{display:flex;gap:22px;padding-top:12px;padding-bottom:12px;font-size:15px}
-nav a{color:var(--text);text-decoration:none;font-weight:600}
-nav a[aria-current="page"]{color:var(--gold);border-bottom:2px solid var(--gold)}
-main{padding:30px 0 50px}
-h1{font-size:30px;line-height:1.2;margin:0 0 6px;color:var(--navy)}
-h2{font-size:21px;margin:34px 0 8px;color:var(--navy)}
-p,li{margin:0 0 12px}
-ul,ol{padding-left:22px;margin:0 0 14px}
-a{color:var(--gold)}
-.meta{color:var(--muted);font-size:15px;margin-bottom:22px}
-.box{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:10px;padding:16px 20px;margin:18px 0}
-.box ul{margin-bottom:0}
-.tablewrap{overflow-x:auto;margin:14px 0}
-table{border-collapse:collapse;width:100%;min-width:560px;background:var(--card);font-size:15px}
-th,td{border:1px solid var(--line);padding:10px 12px;text-align:left;vertical-align:top}
-th{background:var(--bg);color:var(--navy)}
-details{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:2px 18px;margin:10px 0}
-summary{cursor:pointer;font-weight:600;padding:12px 0;color:var(--navy)}
-details[open] summary{margin-bottom:2px}
-footer{border-top:1px solid var(--line);padding:24px 0 40px;color:var(--muted);font-size:14px}
-footer a{color:var(--muted)}
-.btn{display:inline-block;background:var(--navy);color:var(--bg);padding:11px 20px;border-radius:10px;text-decoration:none;font-weight:600}
-@media (prefers-color-scheme:dark){.btn{color:#0C1420}}
-</style>
+    <meta name="color-scheme" content="light only">
+    <meta name="supported-color-schemes" content="light only">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="preload" href="Gentium.ttf" as="font">
+    <link rel="preload" href="Gentium-I.ttf" as="font">
+    <link rel="preload" href="Gentium-B.ttf" as="font">
+    <link rel="preload" href="Gentium-IB.ttf" as="font">
+    <link rel="preload" href="Gentium-CB.ttf" as="font">
+    <link rel="preload" href="OldEnglish.ttf" as="font">
+    <style>
+        @font-face {
+            font-family: 'Gentium';
+            src: url('Gentium.ttf') format('truetype');
+        }
+
+        @font-face {
+            font-family: 'Gentium-B';
+            src: url('Gentium-B.ttf') format('truetype');
+        }
+
+        @font-face {
+            font-family: 'Gentium-I';
+            src: url('Gentium-I.ttf') format('truetype');
+        }
+
+        @font-face {
+            font-family: 'Gentium-IB';
+            src: url('Gentium-IB.ttf') format('truetype');
+        }
+
+        @font-face {
+            font-family: 'Gentium-CB';
+            src: url('Gentium-CB.ttf') format('truetype');
+        }
+
+        @font-face {
+            font-family: 'OldEnglish';
+            src: url('OldEnglish.ttf') format('truetype');
+        }
+
+        html {
+            height: 100%;
+            padding: 0;
+            margin: 0;
+            border: 0;
+            border-spacing: 0;
+            background-color: #f5f5f5;
+        }
+
+        body {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+            font-family: Gentium;
+            font-size: 15px;
+            padding: 0;
+            margin: 0;
+            border: 0;
+            border-spacing: 0;
+            background-color: #f5f5f5;
+        }
+
+        table,
+        tbody,
+        th,
+        tr,
+        td {
+            margin: 0;
+            padding: 0;
+            border-collapse: collapse;
+            border: 0;
+            border-spacing: 0;
+            vertical-align: top;
+        }
+
+        a {
+            text-decoration: none;
+            color: #000;
+        }
+
+        table.page {
+            width: 12in;
+            padding: 0;
+            border-collapse: collapse;
+            margin-bottom: 12px;
+            margin-left: 12px;
+            margin-right: 12px;
+            border-spacing: 0;
+            vertical-align: top;
+            background-color: #fff;
+            box-shadow: rgb(0, 0, 0) 0px 0px 10px;
+        }
+
+        th.page,
+        td.page {
+            height: 18in;
+            margin: 0;
+            padding: 0;
+            border-collapse: collapse;
+            border: 0;
+            border-spacing: 0;
+            vertical-align: top;
+        }
+
+        table.content {
+            padding: 0;
+            border-collapse: collapse;
+            margin: 12px;
+            border-spacing: 0;
+            vertical-align: top;
+            line-height: 15px;
+        }
+
+        .navBox {
+            border: 1px solid #000;
+            width: 193px;
+            height: 56px;
+            padding: 0;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .navBox a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 56px;
+            font-family: Gentium-B;
+            font-size: 19px;
+            letter-spacing: 2px;
+            padding-left: 2px;
+            box-sizing: border-box;
+            line-height: 1;
+            text-transform: uppercase;
+            color: #292929;
+            background-color: #f2f2f2;
+            cursor: pointer;
+            transition: background-color .15s, color .15s;
+        }
+
+        .navBox a:hover {
+            color: #000;
+            background-color: #f5f5f5;
+        }
+
+        .footer-section {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 14px;
+            margin-top: 6px;
+            padding-left: 5px;
+            padding-right: 5px;
+            padding-top: 10px;
+            padding-bottom: 6px;
+            border-top: 1px solid #777;
+            font-family: Gentium;
+            font-size: 14.5px;
+            line-height: 17px;
+            color: #777;
+        }
+
+        .footer-separator {
+            display: inline-block;
+            width: 1px;
+            height: 14px;
+            background-color: #777;
+        }
+
+        .footer-section-link {
+            font-family: Gentium;
+            color: #777;
+            transition: color .15s;
+        }
+
+        .footer-section-link:hover {
+            color: #333;
+            text-decoration: underline;
+        }
+
+        .united-states {
+            font-family: Gentium;
+            margin-left: auto;
+        }
+
+        .pageContent {
+            display: none;
+        }
+
+        .pageContent.active {
+            display: block;
+        }
+
+        .rounded-box .boxTitle {
+            font-family: Gentium-IB;
+            font-size: 30px;
+            line-height: 34px;
+            text-align: center;
+            margin: 0 auto;
+            max-width: 900px;
+        }
+
+        .rounded-box .boxRule {
+            width: 25%;
+            border: 0;
+            border-top: 1px solid #000;
+            margin: 12px 37.5% 10px;
+        }
+
+        .rounded-box .boxText {
+            font-family: Gentium;
+            font-size: 20px;
+            line-height: 26px;
+            text-align: justify;
+            margin: 0;
+        }
+
+        .rounded-box .boxText p {
+            text-indent: 20px;
+        }
+
+        .storeBtn {
+            display: inline-block;
+            font-size: 16px;
+            line-height: 18px;
+            padding: 10px 21px;
+            color: #292929;
+            border: 2px solid #000;
+            background-color: #f2f2f2;
+            border-radius: 40px;
+            text-decoration: none;
+            transition: background-color .15s, color .15s;
+        }
+
+        .storeBtn:hover {
+            color: #000;
+            background-color: #f5f5f5;
+        }
+
+        .shareAd {
+            color: #292929;
+            text-align: center;
+            transition: color .15s;
+        }
+
+        .shareAd > div {
+            background-color: #f2f2f2;
+            transition: background-color .15s;
+        }
+
+        .shareAd:hover {
+            color: #000;
+        }
+
+        .shareAd:hover > div {
+            background-color: #f5f5f5;
+        }
+
+        .navBox.current a {
+            background-color: #000;
+            color: #fff;
+        }
+
+        .doubleSep {
+            border-width: 0;
+            height: 3px;
+            margin-top: 1px;
+            margin-bottom: 1px;
+            border-top: 1px solid #000;
+            border-bottom: 1px solid #000;
+        }
+
+        .secSep {
+            border-width: 0;
+            height: 2px;
+            border-top: 1px solid #000;
+            border-bottom: .7px solid #000;
+            margin-left: 5px;
+            margin-right: 5px;
+            margin-top: 6px;
+            margin-bottom: 6px;
+            line-height: 0;
+        }
+
+        p {
+            margin: 0;
+            padding: 0;
+            text-indent: 9px;
+        }
+
+        .news {
+            border-top: 6px solid transparent;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            text-align: justify;
+            font-size: 18px;
+            line-height: 24px;
+        }
+
+        .ad {
+            margin-left: 5px;
+            margin-right: 5px;
+            text-align: justify;
+            font-size: 14px;
+        }
+
+        .cah1 {
+            margin-top: 6px;
+            font-family: Gentium-B;
+            text-align: center;
+            font-size: 21px;
+            line-height: 24px;
+        }
+
+        .cah2 {
+            font-family: Gentium-B;
+            text-align: center;
+            font-size: 18px;
+            line-height: 20px;
+        }
+
+        .cah3 {
+            font-family: Gentium-B;
+            text-align: center;
+            font-size: 14px;
+            line-height: 16px;
+        }
+
+        .sect {
+            font-family: Gentium-B;
+            text-align: center;
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+
+        .FPT {
+            margin-top: 8px;
+        }
+
+        table.columns {
+            margin: 0;
+            padding: 0;
+            border-collapse: collapse;
+            border-spacing: 0;
+            vertical-align: top;
+            table-layout: fixed;
+            width: 100%;
+            height: 1656px;
+        }
+
+        table.columns td {
+            border-left: .7px solid #000;
+            border-right: .7px solid #000;
+        }
+
+        table.columns tr td:first-child,
+        table.columns tr th:first-child {
+            border-left: 0;
+        }
+
+        table.columns tr td:last-child,
+        table.columns tr th:last-child {
+            border-right: 0;
+        }
+
+        .box {
+            border: 1px solid #000;
+            width: 100%;
+            margin-top: 4px;
+        }
+
+        .boxNews {
+            padding: 5px;
+            padding-bottom: 8px;
+        }
+
+        .byline {
+            font-family: Gentium-B;
+            font-size: 16px;
+            line-height: 18px;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .break {
+            width: 100%;
+            border: 0;
+            border-top: .7px solid #000;
+            margin-top: 4px;
+            margin-bottom: 4px;
+        }
+
+        .lsep {
+            width: 50%;
+            border: 0;
+            border-top: 1px solid #000;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            margin-left: 25%;
+            margin-right: 25%;
+        }
+
+        .dropLine>*:nth-child(1) {
+            text-align: left;
+        }
+
+        /* Middle lines require manual inline indent determination */
+
+        .dropLine>*:last-child {
+            text-indent: 0;
+            text-align: right;
+        }
+
+        .crossLineCenter>* {
+            text-align: center;
+        }
+
+        .supportQA {
+            font-size: 22px;
+            line-height: 31px;
+        }
+
+        .q {
+            font-family: Gentium-B;
+            text-indent: 0;
+            margin-bottom: 4px;
+        }
+
+        .a {
+            text-indent: 0;
+        }
+
+        .q span,
+        .a span {
+            font-family: Gentium-B;
+        }
+
+        .futureQ .line {
+            border-bottom: 1.5px dotted #9a9a9a;
+            height: 34px;
+        }
+
+        .futureQ .label {
+            font-family: Gentium-B;
+            font-size: 22px;
+            line-height: 34px;
+        }
+
+        .futureQ textarea {
+            position: absolute;
+            top: 0;
+            left: 30px;
+            right: 0;
+            height: 136px;
+            margin: 0;
+            padding: 0;
+            border: 0;
+            outline: none;
+            resize: none;
+            overflow: hidden;
+            background: transparent;
+            font-family: Gentium;
+            font-size: 20px;
+            line-height: 34px;
+            color: #000;
+        }
+
+        .futureQ textarea::placeholder {
+            font-family: Gentium-I;
+            color: #9a9a9a;
+        }
+
+        .storySpot {
+            border: 2px dashed #555;
+            margin: 12px 4px 6px 4px;
+            padding: 16px 20px 18px 20px;
+        }
+
+        .storySpot .line {
+            border-bottom: 1.5px dotted #9a9a9a;
+            height: 30px;
+        }
+
+        .sep {
+            width: 38%;
+            border: 0;
+            border-top: 1px solid #000;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            margin-left: 31%;
+            margin-right: 31%;
+        }
+
+        .ssep {
+            width: 25%;
+            border: 0;
+            border-top: 1px solid #000;
+            margin-top: 8px;
+            margin-bottom: 8px;
+            margin-left: 37.5%;
+            margin-right: 37.5%;
+        }
+
+        .cont {
+            width: 30%;
+            border: 0;
+            border-top: 1px solid #000;
+            margin-top: 3px;
+            margin-bottom: 2px;
+            margin-left: 35%;
+            margin-right: 35%;
+        }
+
+        html.small {
+            transform: scale(var(--scale));
+            transform-origin: top left;
+        }
+
+
+        html.medium {
+            transform: scale(0.8358843537414966);
+            transform-origin: top center;
+        }
+
+        body.medium {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .table-container.medium {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        html.large {
+            transform: scale(1.25);
+            transform-origin: top center;
+            overflow-x: clip;
+            overflow-x: hidden;
+        }
+
+        html.exlarge {
+            transform: scale(1.62);
+            transform-origin: top center;
+            overflow-x: clip;
+            overflow-x: hidden;
+        }
+
+        .rounded-box {
+            margin: 22px 20px;
+            width: auto;
+            padding: 28px 32px 32px;
+            background-color: #FCFDFF;
+            border-radius: 15px;
+            box-shadow: 0px 0px 25px 3px rgba(104, 155, 228, 1);
+            box-sizing: border-box;
+        }
+    </style>
+    <script>
+        var a = 0;
+
+        function update() {
+            const widthA = document.documentElement.clientWidth;
+
+            if (widthA <= 983 && a !== 1) {
+                a = 1;
+                const scale = widthA / 1176;
+                document.documentElement.style.setProperty('--scale', scale);
+                document.body.classList.remove('medium');
+                document.querySelector('.table-container').classList.remove('medium');
+                document.documentElement.classList.remove('medium', 'large', 'exlarge');
+                document.documentElement.classList.add('small');
+            } else if (widthA <= 983 && a === 1) {
+                const scale = widthA / 1176;
+                document.documentElement.style.setProperty('--scale', scale);
+            } else if (widthA > 983 && widthA <= 1175 && a !== 2) {
+                a = 2;
+                document.documentElement.classList.remove('small', 'large', 'exlarge');
+                document.documentElement.classList.add('medium');
+                document.body.classList.add('medium');
+                document.querySelector('.table-container').classList.add('medium');
+            } else if (widthA > 1175 && widthA <= 1463 && a !== 3) {
+                a = 3;
+                document.body.classList.remove('medium');
+                document.querySelector('.table-container').classList.remove('medium');
+                document.documentElement.classList.remove('small', 'medium', 'large', 'exlarge');
+            } else if (widthA > 1463 && widthA <= 1944 && a !== 4) {
+                a = 4;
+                document.body.classList.remove('medium');
+                document.querySelector('.table-container').classList.remove('medium');
+                document.documentElement.classList.remove('small', 'medium', 'exlarge');
+                document.documentElement.classList.add('large');
+            } else if (widthA > 1944 && a !== 5) {
+                a = 5;
+                document.body.classList.remove('medium');
+                document.querySelector('.table-container').classList.remove('medium');
+                document.documentElement.classList.remove('small', 'medium', 'large');
+                document.documentElement.classList.add('exlarge');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            update();
+            window.addEventListener('resize', update);
+        });
+    </script>
 </head>
+
 <body>
-<header><div class="wrap">
-<a href="/apps/nearyou/"><img src="/apps/nearyou/logo.svg" alt="Near You logo" width="64" height="64"></a>
-<div><a href="/apps/nearyou/" class="name">Near You</a><div class="tag">Know when the people you know are in the same area.</div></div>
-</div></header>
-<nav aria-label="Near You"><div class="wrap">
-<a href="/apps/nearyou/" aria-current="page">About</a>
-<a href="/apps/nearyou/support">Support</a>
-<a href="/apps/nearyou/privacy">Privacy Policy</a>
-</div></nav>
-<main><div class="wrap">
+    <div class="table-container">
+        <table width="100%">
+            <tbody>
+                <tr>
+                    <td align="center">
+                        <table class="page">
+                            <tbody>
+                                <tr>
+                                    <td class="page">
+                                        <table class="content">
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <table style="line-height: 16px; margin-top: 24px">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td align="left" style="padding-left: 40px; padding-top: 20px; vertical-align: middle;">
+                                                                        <table>
+                                                                            <tr>
+                                                                                <td class="navBox" data-page="privacy">
+                                                                                    <a href="?page=privacy">Privacy</a>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </td>
+                                                                    <td align="center" style="vertical-align: middle; padding-bottom: 10px;">
+                                                                        <a href="./" aria-label="Home" style="display: block; margin: 0 155px;"><img src="Mast.png" alt="Near You" style="display: block; height: 120px; width: 348px;"></a>
+                                                                    </td>
+                                                                    <td align="right" style="padding-right: 40px; padding-top: 20px; vertical-align: middle;">
+                                                                        <table>
+                                                                            <tr>
+                                                                                <td class="navBox" data-page="support">
+                                                                                    <a href="?page=support">Support</a>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="3">
+                                                                        <hr class="doubleSep">
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <table class="columns" style="height: 1528px;">
+                                                            <tbody>
+                                                                <tr style="height: 1px;">
+                                                                    <td colspan="2">
+                                                                        <div class="pageContent" id="page-main">
+                                                                            <div class="rounded-box">
+                                                                                <div class="boxTitle">Never Miss Reconnecting with Friends and Family</div>
+                                                                                <hr class="boxRule">
+                                                                                <div class="byline">Built with Thesmoi</div>
+                                                                                <div class="boxText">
+                                                                                    <p>Near misses are no fun. The touchdown that almost happened, the goal just shy of being realized, the concert you missed by a hair, the meetup that almost occurred. Near You hopes to close that gap. Never again should we learn a day late that a friend from high school stayed across town in a hotel while we attended a conference in the same city. Once you&#8217;ve connected with the people you know, the app quietly keeps an eye out for times when your paths overlap again. Near misses become Near Yous.</p>
+                                                                                    <p>Purposefully made for an active lifestyle where our apps work for us in the background, Near You is not meant to be checked or scrolled. It is only meant to notify you when the best thing you can do is put the phone away and go meet up near you. When you and someone you know end up in the same town, you choose whether you want to send a quick message, grab a coffee, share a meal, or make other plans to catch up. Instead of a friend posting a photo from a coffee shop you walk past every morning, the photo is now of your high school friends who by happenstance were all in town that week. Now arriving Near You.</p>
+                                                                                </div>
+                                                                            </div>
+                                                                            <hr class="secSep">
+                                                                        </div>
+                                                                        <div class="pageContent" id="page-privacy">
+                                                                            <div class="news supportQA">
+                                                                                <div style="display: flex; align-items: center; justify-content: center;">
+                                                                                    <img src="logo.svg" alt="" style="width: 72px; height: 72px;">
+                                                                                    <div style="font-family: Gentium-I; font-size: 48px; line-height: 56px; letter-spacing: 2px; margin: 0px 28px;">Privacy Policy</div>
+                                                                                    <img src="logo.svg" alt="" style="width: 72px; height: 72px;">
+                                                                                </div>
+                                                                                <div class="lsep"></div>
+                                                                                Near You only works if it knows, in some form, where you are and who you know. We do not take that lightly. Privacy policies are usually written to be skipped; we have tried to write ours to be read. Below is what we collect, why, who can see it, and how to delete all of it.
+                                                                            </div>
+                                                                            <div class="secSep" style="margin-left: 0px; margin-right: 0px; margin-bottom: 0px;"></div>
+                                                                        </div>
+                                                                        <div class="pageContent" id="page-support">
+                                                                            <div class="news supportQA">
+                                                                                <div style="display: flex; align-items: center; justify-content: center;">
+                                                                                    <img src="logo.svg" alt="" style="width: 72px; height: 72px;">
+                                                                                    <div style="font-family: Gentium-I; font-size: 48px; line-height: 56px; letter-spacing: 2px; margin: 0px 28px;">Have a question&hellip;?</div>
+                                                                                    <img src="logo.svg" alt="" style="width: 72px; height: 72px;">
+                                                                                </div>
+                                                                                <div class="lsep"></div>
+                                                                                Below are answers to the questions we hear most often. If yours is not answered here, write to us. We will answer every question we can. Questions, ideas, and your own Near You stories can all be sent to <a style="font-family: Gentium-I;" href="mailto:contact.nearyou@icloud.com">contact.nearyou@icloud.com</a>.
+                                                                            </div>
+                                                                            <div class="secSep" style="margin-left: 0px; margin-right: 0px; margin-bottom: 0px;"></div>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr id="privacy-columns" style="display: none;">
+                                                                    <td>
+                                                                        <div class="news supportQA">
+                                                                            <div class="sect" style="text-transform: uppercase;">The Short Version</div>
+                                                                            <p>We collect two things: your contacts and your location. We use them for one purpose, to work out which of your contacts are also on Near You and how far away they are. Nobody ever sees your exact location. We do not collect anything for advertisers, and we never give or sell your information to anyone. You can delete all of it from inside the app at any time.</p>
+                                                                            <div class="sep"></div>
+                                                                            <div class="sect" style="text-transform: uppercase;">What We Collect</div>
+                                                                            <p><span style="font-family: Gentium-B;">Your contacts.</span> Only the contacts you add in Near You are sent to our servers, so we can find your mutual contacts: the people you have added who have also added you. The rest of your address book is never taken or stored.</p>
+                                                                            <p><span style="font-family: Gentium-B;">Your location.</span> Used only to work out how far you are from your mutual contacts.</p>
+                                                                            <p><span style="font-family: Gentium-B;">Device information.</span> A device key and an attestation from your phone, which let us confirm that requests really come from the Near You app on your device, and a notification token so we can send you alerts.</p>
+                                                                            <p>That is everything. We do not collect any other information about you.</p>
+                                                                            <div class="sep"></div>
+                                                                            <div class="sect" style="text-transform: uppercase;">How We Use Your Contacts</div>
+                                                                            <p>Only to match you with your mutual contacts and to send the right distance to the right people. Contacts you have not added in Near You never leave your phone.</p>
+                                                                            <p>Near You also lets you edit your contacts and their notes more easily. Those edits stay on your phone, with one exception: if you change the phone number of a contact you have added, the new number is sent to our servers so that matching stays correct.</p>
+                                                                            <div class="sep"></div>
+                                                                            <div class="sect" style="text-transform: uppercase;">How We Use Your Location</div>
+                                                                            <p>Near You uses your location to tell you when a mutual contact is in the same town, and roughly how far away they are. It asks to use your location &ldquo;Always&rdquo; because it needs it to let you know when people are near you, including while the app is closed.</p>
+                                                                            <p>We never show anyone your actual location, only your approximate distance from them: within about 25 miles (40 km), 50 miles, 75 miles, and so on.</p>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="news supportQA">
+                                                                            <div class="sect" style="text-transform: uppercase;">Who Can See It</div>
+                                                                            <p>Only your mutual contacts, and only an approximate distance. Nobody else is ever told that you are nearby, and nobody can see where you are.</p>
+                                                                            <div class="sep"></div>
+                                                                            <div class="sect" style="text-transform: uppercase;">Who Else Gets It</div>
+                                                                            <p>No one. Our servers are our own and hosted locally, not rented from another company, so your contacts and location stay with us.</p>
+                                                                            <p>The one exception is Apple. Notifications on an iPhone can only be delivered through Apple&rsquo;s notification service, so Apple handles each alert on its way to your phone, and Apple is also used to check your device&rsquo;s attestation. Apple handles this information under its own privacy policy, which protects it to at least the standard described here.</p>
+                                                                            <div class="sep"></div>
+                                                                            <div class="sect" style="text-transform: uppercase;">Permissions We Ask For</div>
+                                                                            <p>Contacts, Location, and Notifications. All three are needed for Near You to work: contacts to find who you know, location to work out distances, and notifications to let you know when someone is nearby.</p>
+                                                                            <div class="sep"></div>
+                                                                            <div class="sect" style="text-transform: uppercase;">Your Choices</div>
+                                                                            <p>Go Quiet mode, under Privacy in the app, stops sharing your location with anyone. A moment of silence turns off your alerts when you are too busy.</p>
+                                                                            <p>You can delete everything we hold about you, or your whole account, from inside the app at any time.</p>
+                                                                            <p>You can also withdraw your consent at any time by turning off Near You&rsquo;s access in your iPhone&rsquo;s Settings or by deleting the app. Deleting the app does not remove what is on our servers, so use the delete option in the app first.</p>
+                                                                            <div class="sep"></div>
+                                                                            <div class="sect" style="text-transform: uppercase;">How Long We Keep It</div>
+                                                                            <p>We keep your information until you tell us to delete it. You can do that from inside the app at any time, either by deleting your data or by deleting your whole account.</p>
+                                                                            <div class="sep"></div>
+                                                                            <div class="sect" style="text-transform: uppercase;">Questions</div>
+                                                                            <p>Questions about this policy can be sent to us by <a style="font-family: Gentium-I;" href="mailto:contact.nearyou@icloud.com">email</a>. If we change it, the new version will be posted here with its date.</p>
+                                                                            <div style="text-align: right; text-transform: uppercase; margin-top: 6px;">Effective November 25, 2026&nbsp;&nbsp;&nbsp;</div>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr id="support-columns" style="display: none;">
+                                                                    <td>
+                                                                        <div class="news supportQA">
+                                                                            <p class="q"><span>Q.</span> How do I get started?</p>
+                                                                            <p class="a"><span>A.</span> Three steps. First, go to the App Store and download <I>Near You from Thesmoi</I>. Then navigate through the app setup. Tell contacts of yours that are not on the app about it so you actually will be able to know if they are in town. Once they add you back, you will each be told whenever the other is nearby. That is all there is to it; after that, Near You stays quiet until it has something worth telling you.</p>
+                                                                            <div class="ssep"></div>
+                                                                            <p class="q"><span>Q.</span> Who can see when I am near them?</p>
+                                                                            <p class="a"><span>A.</span> Only people you are mutual contacts with in the app. You both have to have each other added; nobody else will ever be told that you are nearby.</p>
+                                                                            <div class="ssep"></div>
+                                                                            <p class="q"><span>Q.</span> Why do we both have to add each other?</p>
+                                                                            <p class="a"><span>A.</span> So that nobody is ever told you are nearby unless you have chosen them too. Adding someone on your own is not enough; it only works once they add you back. That keeps Near You between people who actually know each other.</p>
+                                                                            <div class="ssep"></div>
+                                                                            <p class="q"><span>Q.</span> Can I switch Near You off for a while?</p>
+                                                                            <p class="a"><span>A.</span> Yes, in two ways, both under Privacy in the app. Go Quiet mode stops sharing your location, so nobody is told that you are nearby. And if you are simply too busy, you can take a moment of silence to turn off your alerts. Switch either one back whenever you like.</p>
+                                                                            <div class="ssep"></div>
+                                                                            <p class="q"><span>Q.</span> Why can&rsquo;t I see exactly where my friends are?</p>
+                                                                            <p class="a"><span>A.</span> Because Near You is about being in the same town, not about tracking anyone. Nobody can see your exact location either. Near You only tells you roughly how far away a friend is: within about 25 miles (40 km), 50 miles, 75 miles, and so on. That is all it takes to send a message; where you meet is up to the two of you.</p>
+                                                                            <div class="ssep"></div>
+                                                                            <p class="q"><span>Q.</span> Why am I not seeing anyone nearby?</p>
+                                                                            <p class="a"><span>A.</span> Most often it is because the people you know do not have the app yet, or have not added you on it. Both of you need the app, and both of you need to have added each other. A quick text about Near You is often all it takes.</p>
+                                                                            <div class="ssep"></div>
+                                                                            <p class="q"><span>Q.</span> I have an idea. Where can I send it?</p>
+                                                                            <p class="a"><span>A.</span> We would love to hear it. Ideas for new features, things we could do better, or anything else you are wondering about can all be sent to us by <a style="font-family: Gentium-I;" href="mailto:contact.nearyou@icloud.com">email</a>.</p>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="news supportQA">
+                                                                            <p class="q"><span>Q.</span> What happens when a friend is nearby?</p>
+                                                                            <p class="a"><span>A.</span> You get a notification on your phone letting you know that they are in town. The rest is up to you.</p>
+                                                                            <div class="ssep"></div>
+                                                                            <p class="q"><span>Q.</span> I have a new phone. How do I move Near You to it?</p>
+                                                                            <p class="a"><span>A.</span> First delete the app from your old phone. Then install it on your new phone and add the new phone there.</p>
+                                                                            <div class="ssep"></div>
+                                                                            <p class="q"><span>Q.</span> Will it drain my battery?</p>
+                                                                            <p class="a"><span>A.</span> Hardly at all. Near You relies on the phone&rsquo;s own low-power system monitoring, so most days you will not notice it is there.</p>
+                                                                            <div class="ssep"></div>
+                                                                            <p class="q"><span>Q.</span> Near You helped me meet up with someone. Can I share the story?</p>
+                                                                            <p class="a"><span>A.</span> Please do. We would be pleased to receive it by <a style="font-family: Gentium-I;" href="mailto:contact.nearyou@icloud.com?subject=My%20Near%20You%20Story">email</a>, and it may be considered for publication on our front page.</p>
+                                                                            <div class="ssep"></div>
+                                                                            <p class="q"><span>Q.</span> Who makes Near You?</p>
+                                                                            <p class="a"><span>A.</span> Near You was created by Amitabha Shatdal using technology developed by Thesmoi. Thesmoi builds a layer that sits on top of today&rsquo;s frontier AI, helping it work more efficiently and making the most of what it can do. Near You is one example of the work it makes possible.</p>
+                                                                            <div class="ssep"></div>
+                                                                            <p class="q"><span>Q.</span> Which iPhones does it work on?</p>
+                                                                            <p class="a"><span>A.</span> Any iPhone running iOS 15 or later. If your iPhone can update to iOS 15, it can run Near You.</p>
+                                                                        </div>
+                                                                        <div class="ad futureQ" style="margin-top: 15px;">
+                                                                            <div style="border: 3px solid #000; padding: 2px; margin-top: 4px; margin-bottom: 4px;">
+                                                                                <div style="border: 1px solid #000; padding: 2px;">
+                                                                                    <div style="margin: 16px 22px 20px 22px;">
+                                                                                        <div style="font-family: Gentium-I; font-size: 17px; line-height: 20px; text-align: center; letter-spacing: 3px;">THIS SPACE RESERVED FOR</div>
+                                                                                        <div style="font-family: Gentium-IB; font-size: 34px; line-height: 40px; text-align: center; margin-top: 4px;">YOU</div>
+                                                                                        <div class="ssep"></div>
+                                                                                        <div style="position: relative;">
+                                                                                            <div class="line"><span class="label">Q.</span></div>
+                                                                                            <div class="line"></div>
+                                                                                            <div class="line"></div>
+                                                                                            <div class="line"></div>
+                                                                                            <textarea id="futureQuestion" rows="4" placeholder="Type your question here&hellip;" aria-label="Your question"></textarea>
+                                                                                        </div>
+                                                                                        <div class="line" style="margin-top: 10px;"><span class="label">A.</span> <span style="font-family: Gentium-I; font-size: 18px; color: #9a9a9a;">(Leave this part to us.)</span></div>
+                                                                                        <div class="line"></div>
+                                                                                        <div class="line"></div>
+                                                                                        <div style="font-family: Gentium-I; font-size: 18px; line-height: 22px; text-align: center; margin-top: 26px;">No question too small, no idea too big.</div>
+                                                                                        <div style="text-align: center; margin-top: 14px;">
+                                                                                            <a class="storeBtn" id="askAway" href="mailto:contact.nearyou@icloud.com">Ask Away</a>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr id="main-columns">
+                                                                    <td>
+                                                                        <div class="news">
+                                                                            <div class="crossLineCenter" style="
+            font-family: OldEnglish;
+            font-weight: bold;
+            font-size: 32px;
+            line-height: 40px;">
+                                                                                <div>Our Story</div>
+                                                                            </div>
+                                                                            <div class="lsep"></div>
+                                                                            The idea for Near You began on a trip to New York City that I took after my junior year at UW-Madison. A few friends from my summer internship and I decided to pack our bags for a weekend and head to the city that never sleeps. The days were exciting with so much to explore; not a moment to think. It was only when walking to Penn Station for our train ride back that I remembered that two college friends of mine lived in the city. I had walked just blocks from their apartments, but at this point there was no chance of meeting up.
+                                                                            <p>In sharing this story, I started to learn that many people wished for a way to know if their friends by happenstance were in the same town. Sometimes they were traveling and fatefully ran into a cousin of theirs, but more often they only found out after the fact that they had been just minutes away from each other. With Near You, I hope you are able to reconnect and stay in touch no matter if that&rsquo;s on a ski slope in Sun Valley, a beach in LA, or a gondola in Venice.</p>
+                                                                            <div style="text-align: right; text-transform: uppercase; line-height: 9px;">Amitabha Shatdal&nbsp;&nbsp;&nbsp;</div>
+                                                                            <div class="ssep" style="margin-top: 6px; margin-bottom: 6px;"></div>
+                                                                            <p>If Near You has brought you together with a friend, a relative, or an old colleague, we would be pleased to receive your story. Stories can be sent via <a style="font-family: Gentium-I;" href="mailto:contact.nearyou@icloud.com?subject=My%20Near%20You%20Story">email</a> and may be considered for publication here.</p>
+                                                                            <div class="sep"></div>
+                                                                            <div class="storySpot">
+                                                                                <div style="font-family: Gentium-I; font-size: 16px; line-height: 20px; text-align: center; letter-spacing: 3px;">THIS SPACE RESERVED FOR</div>
+                                                                                <div style="font-family: Gentium-IB; font-size: 32px; line-height: 38px; text-align: center; margin-top: 4px;">Your Story</div>
+                                                                                <div class="ssep"></div>
+                                                                                <div style="font-family: Gentium-I; text-align: center; margin-bottom: 10px;">We are saving this spot for the first story one of you sends in. Ran into an old friend thanks to Near You? We would love to print it here.</div>
+                                                                                <div class="line"></div>
+                                                                                <div class="line"></div>
+                                                                                <div style="text-align: right; font-family: Gentium-I; color: #9a9a9a; margin-top: 6px;">&mdash; Your Name Here&nbsp;&nbsp;</div>
+                                                                                <div style="text-align: center; margin-top: 14px;">
+                                                                                    <a class="storeBtn" id="shareStory" href="mailto:contact.nearyou@icloud.com">Share Your Story</a>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="secSep" style="margin-left: 0px; margin-right: 0px;"></div>
+                                                                        <a class="ad shareAd" id="shareAd" href="sms:?&amp;body=Hi!%20I%20just%20joined%20this.%20Thought%20you%E2%80%99d%20like%20it%20too." style="display: block; margin-top: 6px;">
+                                                                            <div style="border: 1px solid #878686; margin-top: 4px; margin-bottom: 4px; box-sizing: border-box;">
+                                                                                <div style="border: 2px solid #000; margin: 1px;">
+                                                                                    <div class="shareInner" style="border: 1px solid #878686; margin: 1px;">
+                                                                                        <div style="margin-left: 6px; margin-right: 6px; margin-top: 12px; margin-bottom: 14px;">
+                                                                                            <div style="font-size: 32px; line-height: 32px; text-align: center; font-family: Gentium-B; margin-bottom: 6px;">BRING YOUR PEOPLE</div>
+                                                                                    <div style="font-size: 24px; line-height: 28px; text-align: center; margin-bottom: 12px;">More Friends Are More Fun</div>
+                                                                                            <div style="font-size: 36px; line-height: 36px; text-align: center; font-family: Gentium-CB;">CLICK TO TEXT A FRIEND NEAR YOU.</div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="ad" style="margin-top: 10px;">
+                                                                            <div style="border: 2px solid #000; margin-top: 4px; margin-bottom: 4px; box-sizing: border-box;">
+                                                                                <div style="border: 1px solid #000; margin: 2px;">
+                                                                                    <div style="border: 2px solid #000; margin: 2px;">
+                                                                                        <div style="margin-left: 6px; margin-right: 6px; margin-top: 9px; margin-bottom: 12px;">
+                                                                                            <div style="display: flex; align-items: center;">
+                                                                                                <img src="logo.svg" alt="Near You logo" style="width: 150px; height: 150px; margin: 4px 14px 4px 6px; flex: none;">
+                                                                                                <div style="flex: 1;">
+                                                                                                    <div style="font-size: 32px; line-height: 32px; text-align: center; font-family: Gentium-B;">NEAR YOU</div>
+                                                                                                    <div style="font-size: 15px; line-height: 18px; text-align: center; margin-top: 6px; margin-bottom: 14px; font-family: Gentium-I">Warning: May Cause Spontaneous Coffee Klatches.</div>
+                                                                                                    <div style="font-size: 24px; line-height: 24px; text-align: center; margin-bottom: 14px;">Same Town, Same Time</div>
+                                                                                                    <div style="font-size: 36px; line-height: 36px; text-align: center; font-family: Gentium-CB; margin-bottom: 16px;">NEVER MISS A MEETUP.</div>
+                                                                                                    <div style="text-align: center;">
+                                                                                                        <!-- TODO: replace # with the App Store link -->
+                                                                                                        <a class="storeBtn" href="#" target="_blank">Download on the App Store</a>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="ad" style="margin-top: 16px;">
+                                                                            <div style="border: 3px solid #000; padding: 2px; margin-top: 4px; margin-bottom: 4px;">
+                                                                                <div style="border: 1px solid #000; padding: 2px;">
+                                                                                    <div style="margin: 18px 20px 18px 20px; text-align: center;">
+                                                                                        <img src="sample.png" alt="Near You notification on an iPhone" style="display: block; height: 716px; width: auto; margin: 0 auto;">
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="footer-section">
+                                                            <span class="footer-copyright">
+                                                                &copy; <span id="footer-year">2026</span> Thesmoi. All rights reserved.
+                                                            </span>
+                                                            <span class="footer-separator"></span>
+                                                            <a class="footer-section-link" href="mailto:contact.nearyou@icloud.com">Contact</a>
+                                                            <span class="united-states">United States</span>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
-<h1>Near You</h1>
-<p class="meta">An iPhone app for friends, family and contacts.</p>
-<p>Near You tells you when someone you know is in the same area as you, so you never miss the chance to meet up when you are both in town.</p>
-<h2>How it works</h2>
-<ol>
-<li><strong>Pick your own contact card</strong> and the contacts you want to keep track of.</li>
-<li><strong>It only works when both of you have saved each other.</strong> If you have each other in your contacts and both use Near You, the app can tell when you are in the same area.</li>
-<li><strong>You choose how close counts.</strong> Set your own &ldquo;nearby&rdquo; radius and get a quiet notification when someone arrives.</li>
-</ol>
-<h2>You stay in control</h2>
-<ul>
-<li>The app never shows your location on a map to anyone.</li>
-<li>There is no advertising and no tracking.</li>
-<li>&ldquo;Go Quiet&rdquo; stops your phone from sending new locations, and you can delete your account and data from inside the app at any time.</li>
-</ul>
-<p><a class="btn" href="/apps/nearyou/privacy">Read the Privacy Policy</a></p>
-<p class="meta">Near You is coming to the App Store. It needs an iPhone with iOS 15 or later.</p>
-<p>Questions? See the <a href="/apps/nearyou/support">support page</a> or write to <a href="mailto:hidden@icloud.com">hidden@icloud.com</a>.</p>
+    <script>
+        (function() {
+            const pages = {
+                main: { title: 'Near You' },
+                privacy: { title: 'Privacy - Near You' },
+                support: { title: 'Support - Near You' }
+            };
+            let page = new URLSearchParams(window.location.search).get('page');
+            if (!pages[page]) page = 'main';
+            document.title = pages[page].title;
+            document.getElementById('page-' + page).classList.add('active');
+            if (page !== 'main') document.getElementById('main-columns').style.display = 'none';
+            if (page === 'support') document.getElementById('support-columns').style.display = '';
+            if (page === 'privacy') document.getElementById('privacy-columns').style.display = '';
+            document.querySelectorAll('.navBox').forEach(function(box) {
+                box.classList.toggle('current', box.dataset.page === page);
+            });
+        })();
+    </script>
 
-</div></main>
-<footer><div class="wrap">
-<a href="/apps/nearyou/privacy">Privacy Policy</a> &middot; <a href="/apps/nearyou/support">Support</a> &middot; <a href="https://thesmoi.com/">Thesmoi</a><br>
-&copy; 2026 Thesmoi. Near You is a trademark of its owner. Apple, iPhone and App Store are trademarks of Apple Inc.
-</div></footer>
+    <script>
+        document.getElementById('footer-year').textContent = new Date().getFullYear();
+        document.getElementById('shareStory').href = 'mailto:contact.nearyou@icloud.com?body=' +
+            encodeURIComponent('Dear Near You,\n\n\n\nVery Respectfully,\n');
+        document.getElementById('askAway').addEventListener('click', function() {
+            const question = document.getElementById('futureQuestion').value.trim();
+            const body = 'Dear Near You,\n\n' + (question || '') + '\n\nVery Respectfully,\n';
+            this.href = 'mailto:contact.nearyou@icloud.com?body=' + encodeURIComponent(body);
+        });
+        document.querySelectorAll('.shareAd').forEach(function(ad) {
+            ad.href = 'sms:?&body=' + encodeURIComponent("Hi! I just joined this. Thought you’d like it too. " + window.location.origin + window.location.pathname);
+        });
+    </script>
+
 </body>
+
 </html>
