@@ -9,12 +9,12 @@
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
-    <link rel="preload" href="Gentium.ttf" as="font">
-    <link rel="preload" href="Gentium-I.ttf" as="font">
-    <link rel="preload" href="Gentium-B.ttf" as="font">
-    <link rel="preload" href="Gentium-IB.ttf" as="font">
-    <link rel="preload" href="Gentium-CB.ttf" as="font">
-    <link rel="preload" href="OldEnglish.ttf" as="font">
+    <link rel="preload" href="Gentium.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="Gentium-I.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="Gentium-B.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="Gentium-IB.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="Gentium-CB.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="OldEnglish.ttf" as="font" type="font/ttf" crossorigin>
     <style>
         @font-face {
             font-family: 'Gentium';
@@ -47,6 +47,8 @@
         }
 
         html {
+            -webkit-text-size-adjust: 100%;
+            text-size-adjust: 100%;
             height: 100%;
             padding: 0;
             margin: 0;
@@ -568,6 +570,15 @@
         }
     </style>
     <script>
+        (function() {
+            var w = document.documentElement.clientWidth;
+            if (w <= 983) {
+                document.documentElement.style.setProperty('--scale', w / 1176);
+                document.documentElement.classList.add('small');
+            }
+        })();
+    </script>
+    <script>
         var a = 0;
 
         function update() {
@@ -887,7 +898,7 @@
                                                                                                     <div style="font-size: 24px; line-height: 24px; text-align: center; margin-bottom: 14px;">Same Town, Same Time</div>
                                                                                                     <div style="font-size: 36px; line-height: 36px; text-align: center; font-family: Gentium-CB; margin-bottom: 16px;">NEVER MISS A MEETUP.</div>
                                                                                                     <div style="text-align: center;">
-                                                                                                        <a class="storeBtn" href="https://apps.apple.com/us/app/near-you-from-thesmoi/id6826496350" target="_blank">Download on the App Store</a>
+                                                                                                                                                                                                                <a class="storeBtn" href="https://apps.apple.com/app/id6826496350" target="_blank">Download on the App Store</a>
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
