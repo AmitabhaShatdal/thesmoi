@@ -571,13 +571,13 @@
 
         /* ---------- Phones (480px and narrower): columns stack ---------- */
         html.phone .table-container {
-            width: 560px;
+            width: 612px;
             transform: scale(var(--scale));
             transform-origin: top left;
         }
 
         html.phone table.page {
-            width: 536px;
+            width: 588px;
         }
 
         html.phone td.page {
@@ -664,7 +664,7 @@
         (function() {
             var w = document.documentElement.clientWidth;
             if (w <= 480) {
-                document.documentElement.style.setProperty('--scale', w / 560);
+                document.documentElement.style.setProperty('--scale', w / 612);
                 document.documentElement.classList.add('phone');
             } else if (w <= 983) {
                 document.documentElement.style.setProperty('--scale', w / 1176);
@@ -679,7 +679,7 @@
             const widthA = document.documentElement.clientWidth;
 
             if (widthA <= 480) {
-                document.documentElement.style.setProperty('--scale', widthA / 560);
+                document.documentElement.style.setProperty('--scale', widthA / 612);
                 if (a !== 6) {
                     a = 6;
                     document.body.classList.remove('medium');
