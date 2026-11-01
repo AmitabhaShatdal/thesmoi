@@ -9,12 +9,12 @@
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
-    <link rel="preload" href="Gentium.ttf" as="font" type="font/ttf" crossorigin>
-    <link rel="preload" href="Gentium-I.ttf" as="font" type="font/ttf" crossorigin>
-    <link rel="preload" href="Gentium-B.ttf" as="font" type="font/ttf" crossorigin>
-    <link rel="preload" href="Gentium-IB.ttf" as="font" type="font/ttf" crossorigin>
-    <link rel="preload" href="Gentium-CB.ttf" as="font" type="font/ttf" crossorigin>
-    <link rel="preload" href="OldEnglish.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="Gentium.ttf" as="font">
+    <link rel="preload" href="Gentium-I.ttf" as="font">
+    <link rel="preload" href="Gentium-B.ttf" as="font">
+    <link rel="preload" href="Gentium-IB.ttf" as="font">
+    <link rel="preload" href="Gentium-CB.ttf" as="font">
+    <link rel="preload" href="OldEnglish.ttf" as="font">
     <style>
         @font-face {
             font-family: 'Gentium';
@@ -568,11 +568,105 @@
             box-shadow: 0px 0px 25px 3px rgba(104, 155, 228, 1);
             box-sizing: border-box;
         }
+
+        /* ---------- Phones (480px and narrower): columns stack ---------- */
+        html.phone .table-container {
+            width: 560px;
+            transform: scale(var(--scale));
+            transform-origin: top left;
+        }
+
+        html.phone table.page {
+            width: 536px;
+        }
+
+        html.phone td.page {
+            height: auto;
+        }
+
+        /* header: masthead on top, Privacy and Support side by side below it */
+        html.phone table.content > tbody > tr > td > table:first-child {
+            margin-top: 14px !important;
+            width: 100%;
+        }
+
+        html.phone table.content > tbody > tr > td > table:first-child > tbody > tr:first-child {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        html.phone table.content > tbody > tr > td > table:first-child > tbody > tr:first-child > td {
+            display: block;
+            padding: 0 !important;
+        }
+
+        html.phone table.content > tbody > tr > td > table:first-child > tbody > tr:first-child > td:nth-child(2) {
+            order: -1;
+            width: 100%;
+            padding-bottom: 12px !important;
+        }
+
+        html.phone table.content > tbody > tr > td > table:first-child > tbody > tr:first-child > td:nth-child(2) a {
+            margin: 0 auto !important;
+            width: fit-content;
+        }
+
+        html.phone .navBox {
+            width: 240px;
+        }
+
+        /* the columns themselves */
+        html.phone table.columns,
+        html.phone table.columns > tbody {
+            display: block;
+            height: auto !important;
+        }
+
+        html.phone table.columns > tbody > tr {
+            display: flex;
+            flex-direction: column;
+            height: auto !important;
+        }
+
+        html.phone table.columns > tbody > tr > td {
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+            border: 0;
+        }
+
+        /* stacking order per page: main page shows the right column first */
+        html.phone #main-columns {
+            flex-direction: column-reverse;
+        }
+
+        /* rule between the two stacked columns */
+        html.phone #main-columns > td:first-child,
+        html.phone #support-columns > td:last-child,
+        html.phone #privacy-columns > td:last-child {
+            border-top: 1px solid #000;
+            margin-top: 14px;
+            padding-top: 8px;
+        }
+
+        html.phone .supportQA div[style*="font-size: 48px"] {
+            font-size: 40px !important;
+            margin: 0 16px !important;
+        }
+
+        html.phone .supportQA img {
+            width: 56px !important;
+            height: 56px !important;
+        }
     </style>
     <script>
         (function() {
             var w = document.documentElement.clientWidth;
-            if (w <= 983) {
+            if (w <= 480) {
+                document.documentElement.style.setProperty('--scale', w / 560);
+                document.documentElement.classList.add('phone');
+            } else if (w <= 983) {
                 document.documentElement.style.setProperty('--scale', w / 1176);
                 document.documentElement.classList.add('small');
             }
@@ -583,6 +677,19 @@
 
         function update() {
             const widthA = document.documentElement.clientWidth;
+
+            if (widthA <= 480) {
+                document.documentElement.style.setProperty('--scale', widthA / 560);
+                if (a !== 6) {
+                    a = 6;
+                    document.body.classList.remove('medium');
+                    document.querySelector('.table-container').classList.remove('medium');
+                    document.documentElement.classList.remove('small', 'medium', 'large', 'exlarge');
+                    document.documentElement.classList.add('phone');
+                }
+                return;
+            }
+            document.documentElement.classList.remove('phone');
 
             if (widthA <= 983 && a !== 1) {
                 a = 1;
@@ -621,14 +728,29 @@
             }
         }
 
+        function fitPhone() {
+            const html = document.documentElement;
+            const frame = document.querySelector('.phoneFrame');
+            if (!html.classList.contains('phone')) {
+                frame.style.height = '';
+                return;
+            }
+            const scale = parseFloat(getComputedStyle(html).getPropertyValue('--scale')) || 1;
+            frame.style.height = Math.ceil(document.querySelector('.table-container').offsetHeight * scale) + 'px';
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             update();
-            window.addEventListener('resize', update);
+            fitPhone();
+            window.addEventListener('resize', function() { update(); fitPhone(); });
+            window.addEventListener('load', fitPhone);
+            if (window.ResizeObserver) new ResizeObserver(fitPhone).observe(document.querySelector('.table-container'));
         });
     </script>
 </head>
 
 <body>
+    <div class="phoneFrame">
     <div class="table-container">
         <table width="100%">
             <tbody>
@@ -944,6 +1066,7 @@
                 </tr>
             </tbody>
         </table>
+    </div>
     </div>
 
     <script>
